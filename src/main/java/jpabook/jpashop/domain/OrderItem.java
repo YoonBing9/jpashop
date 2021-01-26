@@ -2,6 +2,7 @@ package jpabook.jpashop.domain;
 
 import jpabook.jpashop.domain.item.Item;
 import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 
@@ -17,6 +18,7 @@ public class OrderItem {
     @JoinColumn(name = "item_id")
     private Item item;
 
+    @Setter
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id")
     private Order order;
