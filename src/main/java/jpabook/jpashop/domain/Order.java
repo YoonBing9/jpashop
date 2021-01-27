@@ -1,19 +1,21 @@
 package jpabook.jpashop.domain;
 
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
-import static javax.persistence.CascadeType.*;
-import static javax.persistence.EnumType.*;
-import static javax.persistence.FetchType.*;
+import static javax.persistence.CascadeType.ALL;
+import static javax.persistence.EnumType.STRING;
+import static javax.persistence.FetchType.LAZY;
 
 @Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 @Table(name = "orders")
 public class Order {
@@ -56,7 +58,7 @@ public class Order {
     }
 
     //== 생성 메서드 ==//
-    public Order createOrder(Member member, Delivery delivery, OrderItem... orderItems) {
+    public static Order createOrder(Member member, Delivery delivery, OrderItem... orderItems) {
         Order order = new Order();
         order.setMember(member);
         order.setDelivery(delivery);
@@ -73,7 +75,7 @@ public class Order {
     /**
      * 주문 취소
      */
-    public void cancelOrder() {
+    public void cancel() {
         if(delivery.getStatus() == DeliveryStatus.COMP) {
             throw new IllegalStateException("이미 배송 완료된 상품은 취소할 수 없습니다.");
         }
