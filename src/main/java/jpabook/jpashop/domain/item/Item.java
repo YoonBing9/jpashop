@@ -3,6 +3,7 @@ package jpabook.jpashop.domain.item;
 import jpabook.jpashop.domain.Category;
 import jpabook.jpashop.exception.NotEnoughStockException;
 import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.List;
@@ -16,10 +17,13 @@ public abstract class Item {
     @Column(name = "item_id")
     private Long id;
 
+    @Setter
     private String name;
 
+    @Setter
     private int price;
 
+    @Setter
     private int stockQuantity;
 
     @ManyToMany(mappedBy = "items")
