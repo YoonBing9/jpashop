@@ -2,9 +2,11 @@ package jpabook.jpashop.domain;
 
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.Embeddable;
 
+@NoArgsConstructor
 @Getter
 @Embeddable
 public class Address {

@@ -1,6 +1,7 @@
 package jpabook.jpashop.domain;
 
 import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.List;
@@ -12,8 +13,10 @@ public class Member {
     @Column(name = "member_id")
     private Long id;
 
+    @Setter
     private String name;
 
+    @Setter
     @Embedded
     private Address address;
 
