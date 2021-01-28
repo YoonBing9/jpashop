@@ -2,6 +2,7 @@ package jpabook.jpashop.controller;
 
 import jpabook.jpashop.domain.Address;
 import jpabook.jpashop.domain.Member;
+import jpabook.jpashop.dto.MemberDto;
 import jpabook.jpashop.service.MemberService;
 import jpabook.jpashop.web.MemberForm;
 import lombok.RequiredArgsConstructor;
@@ -12,6 +13,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.List;
 
 @RequiredArgsConstructor
 @Controller
@@ -40,5 +43,22 @@ public class MemberController {
         memberService.join(member);
 
         return "redirect:/";
+    }
+
+    @GetMapping("/members")
+    public String list(Model model) {
+        List<Member> members = memberService.findMembers();
+        List<MemberDto> memberDtos = new ArrayList<>();
+        for (Member member : members) {
+            MemberDto memberDto = new MemberDto();
+            memberDto.setId(member.getId());
+            memberDto.setName(member.getName());
+            memberDto.setAddress(member.getAddress());
+            memberDtos.add(memberDto);
+        }
+
+        model.addAttribute("members", memberDtos);
+
+        return "members/memberList";
     }
 }
