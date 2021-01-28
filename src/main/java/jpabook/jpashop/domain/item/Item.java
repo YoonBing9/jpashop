@@ -13,6 +13,7 @@ import java.util.List;
 @Getter
 @Entity
 public abstract class Item {
+    @Setter
     @Id @GeneratedValue
     @Column(name = "item_id")
     private Long id;
