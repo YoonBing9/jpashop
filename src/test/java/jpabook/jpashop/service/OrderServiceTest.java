@@ -83,10 +83,7 @@ class OrderServiceTest {
     }
 
     private Item getItem() {
-        Item book = new Book();
-        book.setName("JPA");
-        book.setPrice(30000);
-        book.setStockQuantity(10000);
+        Item book = Book.createBook("JPA", 30000, 10000, "윤빙구", "ISBN");
         em.persist(book);
         return book;
     }

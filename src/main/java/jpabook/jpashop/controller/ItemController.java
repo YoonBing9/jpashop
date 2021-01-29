@@ -21,20 +21,13 @@ public class ItemController {
 
     @GetMapping(value = "/items/new")
     public String createForm(Model model) {
-        model.addAttribute("form", new Book());
+        model.addAttribute("form", Book.createBook(null,0,0,null,null));
         return "items/createItemForm";
     }
 
     @PostMapping(value = "/items/new")
     public String create(BookForm bookForm) {
-        Book book = new Book();
-        book.setName(bookForm.getName());
-        book.setPrice(bookForm.getPrice());
-        book.setStockQuantity(bookForm.getStockQuantity());
-        book.setAuthor(bookForm.getAuthor());
-        book.setIsbn(bookForm.getIsbn());
-
-        itemService.saveItem(book);
+        itemService.saveBook(bookForm.getName(), bookForm.getPrice(), bookForm.getStockQuantity(), bookForm.getAuthor(), bookForm.getIsbn());
 
         return "redirect:/items";
     }

@@ -21,11 +21,11 @@ public abstract class Item {
     @Column(name = "item_id")
     private Long id;
 
-    protected String name;
+    private String name;
 
-    protected int price;
+    private int price;
 
-    protected int stockQuantity;
+    private int stockQuantity;
 
     @ManyToMany(mappedBy = "items")
     private List<Category> categories;
@@ -48,11 +48,6 @@ public abstract class Item {
 
         stockQuantity = resultStock;
     }
-
-    /**
-     * 생성 메서드
-     */
-    public void createItem(String name, int price, int stockQuantity) {}
 
     /**
      * 수정 메서드

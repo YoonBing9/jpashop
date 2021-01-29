@@ -3,9 +3,11 @@ package jpabook.jpashop.domain.item;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.Entity;
 
+@Setter(AccessLevel.PRIVATE)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Entity
@@ -16,22 +18,14 @@ public class Book extends Item {
     /**
      * 생성 메서드
      */
-    public static Item createItem(String name, int price, int stockQuantity, String author, String isbn) {
-        this.name = name;
-        this.price = price;
-        this.stockQuantity = stockQuantity;
-        this.author = author;
-        this.isbn = isbn;
+    public static Item createBook(String name, int price, int stockQuantity, String author, String isbn) {
+        Book book = new Book();
+        book.setName(name);
+        book.setPrice(price);
+        book.setStockQuantity(stockQuantity);
+        book.setAuthor(author);
+        book.setIsbn(isbn);
 
-        return this;
-    }
-
-    /**
-     * 수정 메서드
-     * */
-    public void changeItemInfo(String name, int price, int stockQuantity, String author, String isbn) {
-        super.changeItemInfo(name, price, stockQuantity);
-        this.author = author;
-        this.isbn = isbn;
+        return book;
     }
 }

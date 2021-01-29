@@ -15,11 +15,6 @@ import java.util.List;
 public class ItemService {
     private final ItemRepository itemRepository;
 
-    @Transactional
-    public void saveItem(Item item) {
-        itemRepository.save(item);
-    }
-
     public List<Item> findAllItems() {
         return itemRepository.findAll();
     }
@@ -32,5 +27,15 @@ public class ItemService {
     public void changeItemInfo(Long id, String name, int price, int stockQuantity) {
         Item item = itemRepository.findOne(id);
         item.changeItemInfo(name, price, stockQuantity);
+    }
+
+    /**
+     * 현 프로젝트는 Item이 Book에 한하여 진행함.
+     */
+    @Transactional
+    public Long saveBook(String name, int price, int stockQuantity, String author, String isbn) {
+        Item book = Book.createBook(name, price, stockQuantity, author, isbn);
+        itemRepository.save(book);
+        return book.getId();
     }
 }
