@@ -2,30 +2,30 @@ package jpabook.jpashop.domain.item;
 
 import jpabook.jpashop.domain.Category;
 import jpabook.jpashop.exception.NotEnoughStockException;
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.List;
 
+@Setter(AccessLevel.PROTECTED)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @DiscriminatorColumn
 @Inheritance(strategy = InheritanceType.JOINED)
 @Getter
 @Entity
 public abstract class Item {
-    @Setter
     @Id @GeneratedValue
     @Column(name = "item_id")
     private Long id;
 
-    @Setter
-    private String name;
+    protected String name;
 
-    @Setter
-    private int price;
+    protected int price;
 
-    @Setter
-    private int stockQuantity;
+    protected int stockQuantity;
 
     @ManyToMany(mappedBy = "items")
     private List<Category> categories;
@@ -47,5 +47,19 @@ public abstract class Item {
         }
 
         stockQuantity = resultStock;
+    }
+
+    /**
+     * 생성 메서드
+     */
+    public void createItem(String name, int price, int stockQuantity) {}
+
+    /**
+     * 수정 메서드
+     */
+    public void changeItemInfo(String name, int price, int stockQuantity) {
+        this.name = name;
+        this.price = price;
+        this.stockQuantity = stockQuantity;
     }
 }
