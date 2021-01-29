@@ -64,6 +64,7 @@ public class ItemController {
         return "items/updateItemForm";
     }
 
+    @PostMapping(value = "/items/{itemId}/edit")
     public String updateItem(@ModelAttribute("form") BookForm form) {
 
         Book book = new Book();
