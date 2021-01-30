@@ -10,6 +10,7 @@ import jpabook.jpashop.exception.NotEnoughStockException;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
@@ -17,13 +18,12 @@ import javax.persistence.EntityManager;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-@Transactional(readOnly = true)
+@Transactional
 @SpringBootTest
 class OrderServiceTest {
     @Autowired private EntityManager em;
     @Autowired private OrderService orderService;
 
-    @Transactional
     @Test
     public void 주문하기() throws Exception {
         //given
@@ -34,17 +34,21 @@ class OrderServiceTest {
 
         //when
         int count = 100;
+        System.out.println("start order");
         Long orderId = orderService.order(member.getId(), book.getId(), count);
+        System.out.println("end order");
+
+        System.out.println("orderId: "+orderId);
 
         //then
         Order getOrder = em.find(Order.class, orderId);
+        System.out.println("getOrder: "+getOrder);
         assertEquals(orderId, getOrder.getId(), "주문 엔티티가 동일해야합니다.");
         assertEquals(OrderStatus.ORDER, getOrder.getStatus(), "주문 상태여야합니다.");
         assertEquals(30000 * 100, getOrder.getTotalPrice(), "주문한 물품의 총 가격은 상품 가격 * 수량이다.");
         assertEquals(1, getOrder.getOrderItems().size(), "주문한 상품의 종류수가 정확해야한다.");
     }
 
-    @Transactional
     @Test
     public void 주문재고_초과수량_주문하기() throws Exception {
         //given

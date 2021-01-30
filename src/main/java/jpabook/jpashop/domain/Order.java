@@ -4,8 +4,10 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.aspectj.weaver.ast.Or;
 
 import javax.persistence.*;
+import javax.persistence.criteria.CriteriaBuilder;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +37,7 @@ public class Order {
     private Delivery delivery;
 
     @Setter
-    private LocalDateTime oderDate;
+    private LocalDateTime orderDate;
 
     @Setter
     @Enumerated(value = STRING)
@@ -66,7 +68,7 @@ public class Order {
             order.addOrderItem(orderItem);
         }
         order.setStatus(OrderStatus.ORDER);
-        order.setOderDate(LocalDateTime.now());
+        order.setOrderDate(LocalDateTime.now());
 
         return order;
     }
