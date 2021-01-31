@@ -2,6 +2,7 @@ package jpabook.jpashop.api;
 
 import jpabook.jpashop.api.dto.CreateMemberInDto;
 import jpabook.jpashop.api.dto.CreateMemberOutDto;
+import jpabook.jpashop.domain.Member;
 import jpabook.jpashop.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -23,9 +24,10 @@ public class MemberApiController {
             return ResponseEntity.badRequest().build();
         }
 
-        //memberService.join();
+        Long memberId = memberService.join(Member.createMemberWithoutId(createMemberInDto.getName(), createMemberInDto.getAddress()));
+        CreateMemberOutDto createMemberOutDto = new CreateMemberOutDto();
+        createMemberOutDto.setId(memberId);
 
-
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok().body(createMemberOutDto);
     }
 }
