@@ -2,14 +2,14 @@ package jpabook.jpashop.api;
 
 import jpabook.jpashop.api.dto.CreateMemberInDto;
 import jpabook.jpashop.api.dto.CreateMemberOutDto;
+import jpabook.jpashop.api.dto.UpdateMemberInDto;
+import jpabook.jpashop.api.dto.UpdateMemberOutDto;
 import jpabook.jpashop.domain.Member;
 import jpabook.jpashop.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -29,5 +29,21 @@ public class MemberApiController {
         createMemberOutDto.setId(memberId);
 
         return ResponseEntity.ok().body(createMemberOutDto);
+    }
+
+    @PatchMapping("member/{id}")
+    public ResponseEntity<UpdateMemberOutDto> update(@PathVariable("id")Long id, @RequestBody @Valid UpdateMemberInDto updateMemberInDto, BindingResult result) {
+        if(result.hasErrors()) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        Long memberId = memberService.modifyMemberInfo(id, updateMemberInDto.getName(), updateMemberInDto.getAddress());
+        Member member = memberService.findOne(memberId);
+
+        UpdateMemberOutDto updateMemberOutDto = new UpdateMemberOutDto();
+        updateMemberOutDto.setId(member.getId());
+        updateMemberOutDto.setName(member.getName());
+
+        return ResponseEntity.ok().body(updateMemberOutDto);
     }
 }
