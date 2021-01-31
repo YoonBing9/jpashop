@@ -19,9 +19,11 @@ class MemberServiceTest {
     @Test
     public void 회원가입() throws Exception {
         //given
-        Member member = new Member();
-        member.setName("윤빙구");
-        member.setAddress(Address.builder().city("경기도").street("미사강변도로").zipcode("111").build());
+        String name = "윤빙구";
+        String city = "경기도";
+        String street = "미사강변도로";
+        String zipcode = "111";
+        Member member = Member.createMemberWithoutId(name, Address.builder().city(city).street(street).zipcode(zipcode).build());
 
         //when
         memberService.join(member);
@@ -33,11 +35,9 @@ class MemberServiceTest {
     @Test
     public void 회원가입_중복_예외() throws Exception {
         //given
-        Member member1 = new Member();
-        member1.setName("윤빙구");
-
-        Member member2 = new Member();
-        member2.setName("윤빙구");
+        String name = "윤빙구";
+        Member member1 = Member.createMemberWithoutId(name, null);
+        Member member2 = Member.createMemberWithoutId(name, null);
 
         //when
         memberService.join(member1);

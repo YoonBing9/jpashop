@@ -93,9 +93,12 @@ class OrderServiceTest {
     }
 
     private Member getMember() {
-        Member member = new Member();
-        member.setName("윤빙구");
-        member.setAddress(Address.builder().city("하남").street("미사강변도로").zipcode("111").build());
+        String name = "윤빙구";
+        String city = "경기도";
+        String street = "미사강변도로";
+        String zipcode = "111";
+        Member member = Member.createMemberWithoutId(name, Address.builder().city(city).street(street).zipcode(zipcode).build());
+
         em.persist(member);
         return member;
     }

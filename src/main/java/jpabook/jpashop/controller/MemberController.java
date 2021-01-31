@@ -33,12 +33,11 @@ public class MemberController {
             return "members/createMemberForm";
         }
 
-        Member member = new Member();
-        member.setName(memberForm.getName());
-        member.setAddress(Address.builder()
-                .city(memberForm.getCity())
-                .street(memberForm.getStreet())
-                .zipcode(memberForm.getZipcode()).build());
+        Member member = Member.createMemberWithoutId(memberForm.getName(),
+                Address.builder()
+                        .city(memberForm.getCity())
+                        .street(memberForm.getStreet())
+                        .zipcode(memberForm.getZipcode()).build());
 
         memberService.join(member);
 
