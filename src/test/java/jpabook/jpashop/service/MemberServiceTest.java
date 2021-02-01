@@ -19,7 +19,7 @@ class MemberServiceTest {
     @Test
     public void 회원가입() throws Exception {
         //given
-        String name = "윤빙구";
+        String name = "유니크";
         String city = "경기도";
         String street = "미사강변도로";
         String zipcode = "111";
@@ -35,7 +35,7 @@ class MemberServiceTest {
     @Test
     public void 회원가입_중복_예외() throws Exception {
         //given
-        String name = "윤빙구";
+        String name = "유니크";
         Member member1 = Member.createMemberWithoutId(name, null);
         Member member2 = Member.createMemberWithoutId(name, null);
 

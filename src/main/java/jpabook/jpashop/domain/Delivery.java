@@ -1,10 +1,13 @@
 package jpabook.jpashop.domain;
 
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
 
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Entity
 public class Delivery {
@@ -16,11 +19,17 @@ public class Delivery {
     @OneToOne(mappedBy = "delivery", fetch = FetchType.LAZY)
     private Order order;
 
-    @Setter
     @Embedded
     private Address address;
 
-    @Setter
     @Enumerated(EnumType.STRING)
     private DeliveryStatus status;
+
+    public static Delivery createDelivery(Address address, DeliveryStatus status) {
+        Delivery delivery = new Delivery();
+        delivery.address = address;
+        delivery.status = status;
+
+        return delivery;
+    }
 }

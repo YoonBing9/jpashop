@@ -32,9 +32,7 @@ public class OrderService {
         OrderItem orderItem = OrderItem.createOrderItem(item, item.getPrice(), count);
 
         //배달 정보 생성
-        Delivery delivery = new Delivery();
-        delivery.setStatus(DeliveryStatus.READY);
-        delivery.setAddress(member.getAddress());
+        Delivery delivery = Delivery.createDelivery(member.getAddress(), DeliveryStatus.READY);
 
         //주문 정보 생성
         Order order = Order.createOrder(member, delivery, orderItem);

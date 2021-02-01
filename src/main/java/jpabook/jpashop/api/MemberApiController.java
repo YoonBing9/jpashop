@@ -61,7 +61,7 @@ public class MemberApiController {
 
     @AllArgsConstructor
     @Data
-    static class Result<T> {
+    private class Result<T> {
         private int count;
         private T data;
     }
