@@ -5,11 +5,16 @@ import jpabook.jpashop.domain.item.Item;
 import jpabook.jpashop.repository.ItemRepository;
 import jpabook.jpashop.repository.MemberRepository;
 import jpabook.jpashop.repository.OrderRepository;
+import jpabook.jpashop.repository.dto.OrderResDto;
+import jpabook.jpashop.repository.query.OrderQueryReository;
+import jpabook.jpashop.repository.query.dto.OrderQueryDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+
+import static java.util.stream.Collectors.toList;
 
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
@@ -18,6 +23,7 @@ public class OrderService {
     private final OrderRepository orderRepository;
     private final MemberRepository memberRepository;
     private final ItemRepository itemRepository;
+    private final OrderQueryReository orderQueryReository;
 
     /**
      * 주문하기
@@ -55,5 +61,21 @@ public class OrderService {
      */
     public List<Order> search(OrderSearch orderSearch) {
         return orderRepository.findByCriteria(orderSearch);
+    }
+
+    /**
+     * 주문리스트 조회(DTO조회)
+     */
+    public List<OrderQueryDto> getOrderDtoList() {
+        return orderQueryReository.findAllToDto();
+    }
+
+    /**
+     * 주문리스트 조회(페이징)
+     */
+    public List<OrderResDto> getOrderList(int offset, int limit) {
+        return orderRepository.findWithPaging(offset,limit).stream()
+                .map(OrderResDto::new)
+                .collect(toList());
     }
 }
